@@ -58,16 +58,16 @@ class User(AbstractUser):
     objects = UserManager()
 
 
-def play_image_file_path(instance, filename):
+def profile_image_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
-    filename = f"{slugify(instance.title)} - {uuid.uuid4()}.{extension}"
-    return os.path.join("uploads/plays/", filename)
+    filename = f"{slugify(instance.username)} - {uuid.uuid4()}.{extension}"
+    return os.path.join("uploads/profile/", filename)
 
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
-    profile_picture = models.ImageField(null=True, upload_to=play_image_file_path)
+    profile_picture = models.ImageField(null=True, upload_to=profile_image_file_path)
 
 
 class UserFollowing(models.Model):
